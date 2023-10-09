@@ -16,6 +16,11 @@ TOKEN = tokenFile.read()
 
 @bot.command(name='p', help='To play song')
 async def play(ctx, mix):
+    if not ctx.message.author.voice:
+        return
+    else:
+        channel = ctx.message.author.voice.channel
+    await channel.connect()
 
     try :
         server = ctx.message.guild
