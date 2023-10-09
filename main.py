@@ -15,16 +15,23 @@ TOKEN = tokenFile.read()
 
 
 @bot.command(name='p', help='To play song')
-async def play(ctx):
+async def play(ctx, mix):
 
     try :
         server = ctx.message.guild
         voice_channel = server.voice_client
+        
+        if(mix == "main"):
+        
+            async with ctx.typing():
+                voice_channel.play(discord.FFmpegPCMAudio('https://stream.radioparadise.com/flacm'))
+            await ctx.send('**You Are Listening To The Main Mix On Radio Paradise, Thank You For Tuning In**')
 
-        async with ctx.typing():
-            print("got in")
-            voice_channel.play(discord.FFmpegPCMAudio('https://stream.radioparadise.com/flac'))
-        await ctx.send('**Thank You For Tuning In**')
+        elif(mix == "rock"):
+            async with ctx.typing():
+                voice_channel.play(discord.FFmpegPCMAudio('https://stream.radioparadise.com/rock-flac'))
+            await ctx.send('**Rock Mix**')
+
     except:
         await ctx.send("The bot is not connected to a voice channel.")
 
